@@ -1,0 +1,301 @@
+<html>
+    <head>
+        <title>Customer page</title>
+        <link rel="stylesheet" href="/CSS/customercss.css">
+        <script src="https://kit.fontawesome.com/8267c973ee.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="top">
+            <div class="greeting">
+                <div class="greeting_div_main">
+                    <div class="username"><p class="line" id="usernameline"></p></div>
+                    <div class="dropdown-profile" onclick="toggledropdown()"><i id="icon" class="fa-solid fa-angle-down" style="color: #ffffff;"></i></div>
+                </div>
+            </div>
+            <div id="dropdownContent" class="dropdown-Content">
+                <div class="dpcitems"><i class="fa-solid fa-user" style="color: #000000;"></i><a href="#">Profile</a></div>
+                <div class="dpcitems"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #000000;"></i><a href="/logout">Logout</a></div>
+            </div>
+        </div>
+        <div class="main-nav">
+            <div>
+                <div class="item1"><a href="/customerMainPage">HOME</a></div>
+                <div class="menuslidebar1"></div>
+            </div>
+            <div>
+                <div class="item2"><a href="/booking">NEW BOOKING</a></div>
+                <div class="menuslidebar2"></div>
+            </div>
+            <div>
+                <div class="item3"><a href="/issues">ISSUES</a></div>
+                <div class="menuslidebar3"></div>
+            </div>
+        </div>
+        <!-- <div class="category-selector">
+                <select>
+                    <option value="Dashboard" id="loadOrders">DashBoard</option>
+                    <option value="Canceledorders" id="loadCancelledOrders">Cancelled Orders</option>
+                    <option value="Deliveredorders" id="loadDeliveredOrders">Delivered Orders</option>
+                    <option value="Analytics">Analytics</option>
+                </select>
+        </div> -->
+        <div class="maincontainer">
+            <aside class="sidenavcon">
+                <div class="sidenavbar">
+                    <div class="sidenavitems" id="loadOrders" >DashBoard</div>
+                    <div class="sidenavitems" id="loadCancelledOrders">Cancelled Orders</div>
+                    <div class="sidenavitems" id="loadDeliveredOrders">Delivered Orders</div>
+                    <div class="sidenavitems"><a>Analytics</a></div>
+                    <!-- <div><img src="\UserImages\productImage_1715493618306.png"> </div> -->
+                </div>
+            </aside>
+            <div id="demo"></div>
+            <div class="NoOrders" id="NoOrders">
+                <h1>Welcome!.U haven't Started yet.</h1>
+                <h3>Make it a Start.Book an order now.</h3>
+            </div>
+            <div class="showIndividualOrderDetails " id="showIndividualOrderDetails">
+                <button class="close-btn" id="close-btn"><i class="fa-solid fa-xmark" style="color: #000000;"></i></button>
+                <div class="dc1div" id="dc1div">Loading...</div>
+            </div>
+        </div>
+        <footer>
+            <h4 id="h4f">Follow Us On Social Media For More Updates:</h4>
+             <div class="icon-bar">
+         <ul>
+               <li><a href="https://www.facebook.com/profile.php?id=100010586139717&mibextid=ZbWKwL"><i class="fa-brands fa-square-facebook" style="color: #ffffff;"></i>  Facebook</a></li>
+               <li><a href="https://instagram.com/phanindra___________?igshid=ZDdkNTZiNTM="><i class="fa-brands fa-square-instagram" style="color: #ffffff;"></i>    Instagram</a></li>
+               <li><a href="#"><i class="fa-brands fa-telegram" style="color: #ffffff;"></i>   Telegram</a></li>
+               <li><a href="#"><i class="fa-brands fa-square-whatsapp" style="color: #ffffff;"></i>  Whatsapp</a></li>
+               <li><a href="#"><i class="fa-brands fa-linkedin" style="color: #ffffff;"></i>   Linked-in</a></li>
+         </ul>
+             <hr>
+             <h4>Contact us at:</h4>
+             <b>G-MAIL:-<a class="mailele" href=mailto:"knowntheunknown07@gmail.com">knowntheunknown07@gmail.com</a></b>
+         </div>
+     </footer>
+        <script>
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+
+                // First event listener: Runs once DOM is loaded
+                fetchOrderDetails('');
+                getUserName();
+
+                // Second event listener: Attaches click events to buttons
+                const loadOrdersButton = document.getElementById('loadOrders');
+                const loadCancelledOrdersButton=document.getElementById('loadCancelledOrders');
+                const loadDeliveredOrdersButton = document.getElementById('loadDeliveredOrders');
+
+                loadOrdersButton.addEventListener('click', () => {
+                    fetchOrderDetails('');
+                });
+
+                loadCancelledOrdersButton.addEventListener('click', () => {
+                    fetchOrderDetails('Cancelled');
+                });
+
+                loadDeliveredOrdersButton.addEventListener('click', () => {
+                    fetchOrderDetails('Delivered');
+                });
+            });
+
+            async function getUserName()
+            {
+               try{
+                const response=await fetch('http://localhost:3000/getusername',{
+                    method:'GET',
+                    credentials:'include'
+                });
+                const un=await response.json();
+                document.getElementById('usernameline').innerHTML=`Hello ${un.username}!`;
+               }
+               catch(error){
+                console.error('Fetch error: ', error);
+               }
+            }
+
+            async function fetchOrderDetails(status) {
+              try {
+                let response;
+                if(status === '')
+                {
+                    response = await fetch(`/customerOrderDetails`);
+                }
+                else{
+                    response = await fetch(`/customerOrderDetails/${status}`);
+                }
+                if (!response.ok) {
+                  throw new Error('Network response was not ok ' + response.statusText);
+                }
+                
+                const data = await response.json();
+                const container = document.getElementById('demo');
+                container.innerHTML = ''; // Clear previous content
+                if (!data || (Array.isArray(data) && data.length === 0)) {
+                    document.getElementById('NoOrders').style.display="block";
+                } else{
+                    document.getElementById('NoOrders').style.display="none";
+                    data.forEach(order => {
+                    const dateObj = new Date(order.DateOfOrder);
+                    const formattedDate = dateObj.toLocaleDateString();
+                    const formattedTime = dateObj.toLocaleTimeString();
+                    const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+                    let txt=document.createElement('div');
+                    txt.className="addingdivs";
+                    let sub1=document.createElement('div');
+                    sub1.className="child";
+                    let sub2=document.createElement('div');
+                    sub2.className="imgchild";
+                    let imgele=document.createElement('img');
+                    imgele.classList.add("imgmain");
+                    imgele.src=`/UserImages/${order.ProductImage_Name}`;
+                    sub2.appendChild(imgele);
+                    let multipleLinesHTML=
+                    '<h2  class="h2stylemain"> Your Order</h2>'+
+                    `<span class="orderid" id="orderid" >Order ID:</span>`+
+                    `<span>${order.OrderId}</span>`+`<br>`+    
+                    '<span class="dofmain">DATE OF ORDER:</span>'+
+                    `<span class="dofdotmain">${formattedDateTime}</span>`+'<br>'+
+                    '<span class="stsmain">Status:</span>'+
+                    `<span class="stsdatamain">${order.Status}</span>`+'<br>'+
+                    '<span class="delbymain">Delivered By:</span>'+
+                    `<span>${order.DeliverBy}</span>`+'<br>'+
+                    `<button  class="trkordermain" onclick="showOrderDetails('${order.OrderId}')">Track order</button>`;
+                    sub1.innerHTML=multipleLinesHTML;
+                    txt.appendChild(sub1);
+                    txt.appendChild(sub2);
+                    document.getElementById("demo").appendChild(txt);
+                    });
+                }
+                
+              } catch (error) {
+                console.error('Fetch error: ', error);
+              }
+            }
+
+            //toggle of image for logout
+            function toggledropdown(){
+                document.getElementById("icon").classList.toggle('rotate');
+                var ddcont=document.getElementById('dropdownContent');
+                ddcont.style.display=(ddcont.style.display === 'block' ? 'none':'block');
+            }
+
+            //get individual order details of the orders
+
+            const sod=document.getElementById('showIndividualOrderDetails');
+            const dc1=document.getElementById('dc1div');
+            const overlay=document.createElement('div');
+            overlay.classList.add('overlay');
+            document.body.appendChild(overlay);
+            const showOrderDetails = async(orderId) => {
+                try{
+                    const response= await fetch(`/getorderdetails/${orderId}`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    data= await response.json();
+                    dc1.innerHTML='';
+                    data.forEach(order=>{
+                        const dateObj = new Date(order.DateOfOrder);
+                        const formattedDate = dateObj.toLocaleDateString();
+                        const formattedTime = dateObj.toLocaleTimeString();
+                        const formattedDateTime = `${formattedDate} ${formattedTime}`;
+                        let orderdetails =document.createElement("div");
+                        orderdetails.classList.add("maindetailsdiv");
+                        let trackorderstatus=document.createElement("div");
+                        trackorderstatus.classList.add("orderstatustracker");
+                        orderdetails.innerHTML=`
+                        <h1 class="indordh" >Order Details</h1>
+                        <span class="indordhead" >Receiver Name:</span>
+                        <span class="indorddata" >${order.ReceiverName}</span><br>
+                        <span class="indordhead">Destination City:</span>
+                        <span class="indorddata">${order.ToCity}</span><br>
+                        <span class="indordhead">Receiver Phone Number:</span>
+                        <span class="indorddata">${order.ReceiverPhoneNo}</span><br>
+                        <span class="indordhead">Receiver Address:</span>
+                        <span class="indorddata">${order.ReceiverAddress}</span><br>
+                        <span class="indordhead">Date Of Order:</span>
+                        <span class="indorddata">${formattedDateTime}</span><br>
+                        <span class="indordhead">Sender Name:</span>
+                        <span class="indorddata">${order.SenderName}</span><br>
+                        <span class="indordhead">From City:</span>
+                        <span class="indorddata">${order.FromCity}</span><br>
+                        <span class="indordhead">Sender Phone Number:</span>
+                        <span class="indorddata">${order.SenderPhoneNo}</span><br>
+                        <span class="indordhead">ItemWeight:</span>
+                        <span class="indorddata">${order.ItemWeight}</span><br>
+                        <span class="indordhead">SenderAddress:</span>
+                        <span class="indorddata">${order.SenderAddress}</span><br>
+                        `;
+                        trackorderstatus.innerHTML=`
+                        <div class="order-tracking">
+                            <div class="stage" id="stage" >
+                                <div class="circle" id="circle1" >1</div>
+                                <div class="label">Order Confirmed</div>
+                            </div>
+                            <div class="stage" id="stage">
+                                <div class="circle" id="circle2">2</div>
+                                <div class="label">Driver Accepted</div>
+                            </div>
+                            <div class="stage" id="stage">
+                                <div class="circle" id="circle3">3</div>
+                                <div class="label">On The Way</div>
+                            </div>
+                            <div class="stage" id="stage">
+                                <div class="circle" id="circle4">4</div>
+                                <div class="label">Item Delivered</div>
+                            </div>
+                        </div>
+                        `;
+                        dc1.appendChild(orderdetails);
+                        dc1.appendChild(trackorderstatus);
+                        sod.appendChild(dc1);
+                        sod.style.display="block"; 
+                        overlay.style.display="block";
+                        document.body.style.overflow = 'hidden';
+                        var status=`${order.Status}`.toLowerCase();
+                        if(status === 'pending') 
+                        {
+                            document.getElementById('circle1').style.backgroundColor='green';
+                        }
+                        else if(status === 'driver accepted'){
+                            document.getElementById('circle1').style.backgroundColor='green';
+                            document.getElementById('circle2').style.backgroundColor='green';
+                        }
+                        else if(status === 'on the way'){   
+                            document.getElementById('circle1').style.backgroundColor='green';
+                            document.getElementById('circle2').style.backgroundColor='green';
+                            document.getElementById('circle3').style.backgroundColor='green';
+                        }
+                        else if(status ==='delivered'){
+                            document.getElementById('circle1').style.backgroundColor='green';
+                            document.getElementById('circle2').style.backgroundColor='green';
+                            document.getElementById('circle3').style.backgroundColor='green';
+                            document.getElementById('circle4').style.backgroundColor='green';
+                        }
+                        else{
+                            document.getElementById('circle1').style.backgroundColor='red';
+                            document.getElementById('circle2').style.backgroundColor='red';
+                            document.getElementById('circle3').style.backgroundColor='red';
+                            document.getElementById('circle4').style.backgroundColor='red';
+                        }
+                    })
+                }
+                catch(error){
+                    sod.innerHTML=`Sorry For interuption.We Are Working on it and remind u`;
+                    console.log(error);
+                }
+            };
+
+            document.getElementById('close-btn').addEventListener('click', () => {
+                sod.style.display="none";
+                overlay.style.display="none";
+                document.body.style.overflow="auto";
+            });
+
+            window.showOrderDetails = showOrderDetails;
+        </script>
+    </body>
+</html>

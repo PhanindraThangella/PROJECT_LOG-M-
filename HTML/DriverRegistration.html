@@ -1,0 +1,157 @@
+<html>
+	<head>
+    		<title>Driver Registration Page</title>
+    		<link rel="stylesheet" href="/CSS/cssfordriverregistration.css">
+    		<script src="https://kit.fontawesome.com/8267c973ee.js" crossorigin="anonymous"></script>
+	</head>
+<body>
+    	<div class="logo-details">
+		<img src="/ASSETS/Logo.jpg" width="300px" Height="200px">
+		<p><b>Value Each And Every Customer.We Are looking Forward To Provide a Better User Interface"</b></p>
+	</div>
+	<div class="topnav">
+    		<i class="fa-solid fa-house" style="color: #ffffff;"></i>
+    		<a href="/">Home</a>
+    		<a href="/issues">Any Issues</a>
+    		<a href="/about">About</a>
+	</div>
+	<div class="regpage">
+		<form id="registerform">
+    			<h1><u>Driver Registration Form</u></h1>
+			<label for="firstname" >FIRST NAME:</label>
+			<input type="text" id="firstname" name="firstname" placeholder="Enter First Name"required >
+			<label for="lastname" >LAST NAME:</label>
+			<input type="text" id="lastname" name="lastname" placeholder="Enter Last Name">
+			<label for="email">EMAIL:</label>
+			<input type="email" id="email" name="email" placeholder="Enter Working Email Address For Further Verification.">
+			<label for="mobileno" >PHONE NUMBER:</label>
+			<input type="tel" id="mobileno" name="mobileno" minlength="10" maxlength="10" placeholder="Enter 10 digits Phone Number.It Must be in Working Condition" required>
+			<label for="aadharnumber" >AADHAR NUMBER:</label>
+			<input type="text" id="aadharnumber" name="aadharnumber" minlength="12" maxlength="12" placeholder="Enter Valid  Aadhar only , it will be verified Later" required>
+			<label for="vehicleno" >VEHICLE NUMBER:</label>
+			<input type="text" id="vehicleno" name="vehicleno" placeholder="Name Specified while Registration Must Be Matched With Your Name Mentioned Above" required>
+			<label for="Drivinglicenseno" >DRIVING LICENSE NUMBER:</label>
+			<input type="text" id="Drivinglicenseno" name="Drivinglicenseno" placeholder="Enter Valid Number.It Will Verified Later" required>
+			<label for="Preferredlocations" >PREFERED LOCATIONS:</label>
+			<input type="text" id="Preferredlocations" name="Preferredlocations" placeholder="Enter Multiple Locations by using , separator" required>
+			<p class="infocarrier" id="msgbox"></p>
+			<button type="button" id="registerbutton">SUBMIT</button>
+		</form>
+	</div>
+	<script>
+		document.getElementById("registerbutton").addEventListener('click', async function(event){
+			event.preventDefault();
+			// reading values of Elements
+			const fn = document.getElementById('firstname');
+            const ln = document.getElementById('lastname');
+            const eml = document.getElementById('email');
+            const mobno = document.getElementById('mobileno');
+            const aadharno = document.getElementById('aadharnumber');
+            const vno = document.getElementById('vehicleno');
+            const Dno = document.getElementById('Drivinglicenseno');
+            const Pl = document.getElementById('Preferredlocations');
+			const msgbox=document.getElementById('msgbox');
+
+			let regex = new RegExp(/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/);
+			if(regex.test(vno.value) === false){
+				vno.style.border="2px solid red";
+				msgbox.innerHTML="Pls Enter A Valid Vehicle Number!..";
+				msgbox.style.display="block";
+				// event.preventDefault();
+				return false;
+			}
+			else{
+				vno.style.border="";
+				msgbox.style.display="";
+			}
+			if(isNaN(mobno.value))
+			{
+				mobno.style.border="2px solid red";
+				msgbox.innerHTML="PHONE NUMBER MUST BE NUMERIC!..";
+				msgbox.style.display="block";
+				return false;
+			}
+			else{
+				mobno.style.border="";
+				msgbox.style.display="";
+			}
+			if(isNaN(aadharno.value))
+			{
+				aadharno.style.border="2px solid red";
+				msgbox.innerHTML=("AADHAR NUMBER MUST BE NUMERIC!..");
+				msgbox.style.display="block";
+				return false;
+			}
+			else{
+				aadharno.style.border="";
+				msgbox.style.display="";
+			}
+
+			//fetching DATA from server
+					const firstname =fn.value;
+                    const lastname =ln.value;
+                    const email =eml.value;
+                    const mobileno =mobno.value;
+                    const aadharnumber =aadharno.value;
+                    const vehicleno =vno.value;
+                    const Drivinglicenseno =Dno.value;
+                    const Preferredlocations =Pl.value;
+			const response = await fetch('http://localhost:3000/driverRegisterData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstname,
+                    lastname,
+                    email,
+                    mobileno,
+                    aadharnumber,
+                    vehicleno,
+                    Drivinglicenseno,
+                    Preferredlocations
+                })
+            });
+
+            const responseData = await response.json();
+			if(responseData.msg === "EAE")
+			{
+				eml.style.border="2px solid red";
+				msgbox.innerHTML="EMAIL Already Exsists!..Try Another.";
+				msgbox.style.display="block";
+				// event.preventDefault();
+				return false;
+			}
+			if(responseData.msg === "AAE")
+			{
+				aadharno.style.border="2px solid red";
+				msgbox.innerHTML="Aadhar Number Already Exsists!..Try Another.";
+				msgbox.style.display="block";
+				// event.preventDefault();
+				return false;
+			}
+			if(responseData.msg === "VAE")
+			{
+				vno.style.border="2px solid red";
+				msgbox.innerHTML="Vehicle Number Already Exsists!..Try Another.";
+				msgbox.style.display="block";
+				// event.preventDefault();
+				return false;
+			}
+			if(responseData.msg === "DAE")
+			{
+				Dno.style.border="2px solid red";
+				msgbox.innerHTML="Driving License Already Exsists!..Try Another.";
+				msgbox.style.display="block";
+				// event.preventDefault();
+				return false;
+			}
+			if(response.ok)
+			{
+    			window.location.href = '/signup';
+			}
+
+		})
+	</script>
+</body>
+</html>

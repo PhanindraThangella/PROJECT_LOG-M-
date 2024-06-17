@@ -1,0 +1,278 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+.container{
+    display:flex;
+    flex-direction: column;
+    height:100%;
+}
+.header{
+    display:flex;
+    flex-direction:row;
+    height:200px;
+    background: linear-gradient(to left, #434343, #000000); 
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+}
+.header h1{
+    width:485px;
+    color:white;
+    font-size:100px;
+    margin:50px 100px;
+}
+.headermenu{
+    margin-left:20%;
+}
+.headermenu ul{
+    display:flex;
+    flex-direction:row;
+    list-style-type:none;
+    justify-content: space-around;
+    margin-top:30px;
+}
+.headermenu li{
+    color:white;
+    padding:20px;
+    font-size:18px;
+}
+.headermenu a{
+    text-decoration:none;
+    color:white;
+}
+.remaining{
+    display:flex;
+    flex:1;
+}
+.sidenav{
+    width:250px;
+    /* padding:15px; */
+    border-right:10px solid black;
+    background-color: #BDBDBD;
+    height:500px;
+    position: fixed;
+    top:200px;
+    left:0;
+}
+.maincontent{
+    margin-top:200px;
+    flex:1;
+    padding:15px;
+}
+.earnings{
+    max-width:280px;
+    flex:1;
+    padding:15px;
+    border-left:10px solid black;
+    height:500px;
+    position: fixed;
+    top:200px;
+    right:0;
+}
+.earnings h1{
+    text-align: center;
+}
+.sidenav nav ul{
+    list-style-type:none;
+}
+.sidenav nav ul li{
+    text-align: center;
+    margin:15px 0px;
+    font-weight: 700;
+    font-size: 24px;
+    color:black;
+    padding:15px;
+    /* border-bottom:3px solid black; */
+}
+.sidenav nav ul li:hover{
+    background-color: black;
+    color:white;
+    border-radius: 40px;
+}
+.sidenav nav ul li:active{
+    background-color: black;
+    color:white;
+    border-radius: 40px;
+}
+.earningsTod{
+    /* border:5px solid green; */
+    width:150px;
+    height:60px;
+    margin:auto;
+}
+.earnings h2{
+    margin:20px 0px;
+    text-align: center;
+}
+.earningsTKT{
+    /* border:5px solid green; */
+    width:150px;
+    height:60px;
+    margin:auto;
+}
+.earningsTE{
+    /* border:5px solid green; */
+    width:150px;
+    height:60px;
+    margin:auto;
+}
+.NoOrders{
+    display:none;
+    width:600px;
+    height:200px;
+    border-radius:100px;
+    margin:80px 150px;
+    padding:30px;   
+    box-shadow: 3px 3px 10px 10px grey;
+    transition: transform 0.3s ease-in-out;
+    text-align: center;
+}
+.NoOrders h1,h3{
+    margin-left:20px;
+}
+.NoOrders h1{
+    margin-top:50px;
+    font-size:30px;
+}
+.NoOrders:hover{
+    transform: scale(1.02);
+    transform-origin:center;
+}
+.addingdivs{
+    width:560px;
+    height:300px;
+    border-radius: 10px;
+    margin:50px auto;
+    padding:20px;
+    /*border-style:solid;
+    border-width: 5px;
+    border-color: black;*/
+    box-shadow: 3px 3px 10px 10px grey;
+}
+.child{
+    height:200px;
+    width:340px;
+    float:left;
+    background-color: grey;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+.imgchild{
+    height:inherit;
+    width:150px;
+    float:right;
+}
+.imgmain{
+    height:200px;
+    width:inherit;
+}
+.h2stylemain{
+    text-align:center;
+    margin:10px; 
+}
+.orderid{
+    font-weight:bold;
+    font-size:18px;
+    margin:30px;
+    margin-right:0px;
+    padding:10px 0px;
+}
+.orderiddata{
+    margin:0px;
+    padding:0px 12px;
+}
+.dofmain{
+    font-weight:bold;
+    font-size:18px;
+    margin:30px;
+    padding:10px 0px;
+}
+.dofdotmain{
+    margin:30px;
+    padding:10px 0px;
+}
+.amtmain{
+    font-weight:bold;
+    font-size:18px;
+    margin:30px;
+    margin-right:0px;
+    padding:10px 0px;
+}
+.amtstatus{
+    padding:10px 12px;
+    color:Green;
+}
+.stsmain{
+    font-weight:bold;
+    font-size:18px;
+    margin:30px;
+    padding:10px 0px;
+}
+.stsdatamain,.orderdelloc{
+    margin-left:30px;
+    font-size:18px;
+    padding:10px 0px;
+}
+.delbymain{
+    font-weight:bold;
+    font-size:18px;
+    margin:30px;
+    padding:10px 0px;
+}
+.acceptbutton{
+    width:130px;
+    height:40px;
+    border-radius:10px;
+    color:White;
+    background-color: rgb(245, 55, 55);
+    margin:20px 40px;
+    border:none;
+}
+.acceptbutton:hover{
+    cursor:pointer;
+}
+.rejectbutton{
+    width:130px;
+    height:40px;
+    border-radius:10px;
+    color:White;
+    background-color: rgb(56, 255, 49);
+    border:none;
+}
+.rejectbutton:hover{
+    cursor:pointer;
+}
+.EarningsTodDOM{
+    text-align:center;
+    font-size:36px;
+    font-weight:700;
+}
+.EarningsTKTDOM{
+    text-align:center;
+    font-size:36px;
+    font-weight:700;
+}
+.EarningsTEDOM{
+    text-align:center;
+    font-size:36px;
+    font-weight:700;
+}
+.updateStsButton{
+    width:130px;
+    height:40px;
+    border-radius:10px;
+    color:White;
+    background-color:black;
+    margin:40px 100px;
+    border:2px solid grey;
+}
+.updateStsButton:hover{
+    cursor:pointer;
+}

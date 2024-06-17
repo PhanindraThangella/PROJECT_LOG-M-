@@ -1,0 +1,101 @@
+	<html>
+    	<head>
+        	<title>Registration page</title>
+        	<link rel="stylesheet" href="/CSS/cssforregister.css">
+		<script src="https://kit.fontawesome.com/8267c973ee.js" crossorigin="anonymous"></script>
+	</head>
+<body>
+	<div class="logo-details">
+		<img src="/ASSETS/Logo.jpg">
+		<p><b>Value Each And Every Customer.We Are looking Forward To Provide a Better User Interface"</b></p>
+	</div>
+	<div class="topnav">
+    		<i class="fa-solid fa-house" style="color: #ffffff;"></i>
+    		<a href="/">Home</a>
+    		<a href="/issues">Any Issues</a>
+    		<a href="/about">About</a>
+			<a class="log2" href="/login">Sign-in</a>
+	</div>
+	<div class="regframe">
+			<h2><u>WelCome!.Sign-Up</u></h2>
+				<form id="myForm" >
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username" placeholder="Enter A NickName That Beautifully Describes You" required>
+					<label for="email">E-Mail</label>
+					<input type="email" id="email" class="email" name="email"placeholder="Enter Your E-Mail Address" required >
+					<label for="phno">Phone Number</label>
+					<input type="tel" class="phno" id="phno" name="phno" placeholder="Enter 10-digit Phone Number" maxlength="10">
+					<label for="Password">Password</label>
+					<input type="password" class="Password" id="Password" name="Password" Placeholder="Enter Unique Password" required>
+					<label for="confirm_password">Confirm Password</label>
+					<input type="password" class="confirm_password" id="conformPassword" placeholder="Re-Enter Password Again" required>
+					<p id="messagepass" class="messagepass">Passwords not matched!..</p>
+					<button type="submit">Register</button>
+				</form>
+			<u>NOTE:</u>
+			<ol>
+				<li>Password Should Contains Only Alphabets,Number And Special Symbols.</li>
+				<li>It Contains Atleast One Lower And One Upper Case Alphabets.</li>
+				<li>It Doesn't Contains Underscores,Semicoloumns.</li>
+			</ol>
+	</div>
+	<script>
+		    document.getElementById('myForm').addEventListener('submit',async  function(event) {
+            const username1=document.getElementById('username');
+			const email1=document.getElementById('email');
+			const phoneno1=document.getElementById('phno');
+			const newpass1=document.getElementById('Password');
+			const conpass=document.getElementById('conformPassword');
+			const p=document.getElementById('messagepass');
+            let regex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
+			if(regex.test(newpass1.value) === false){
+				newpass1.style.border="2px solid red";
+				p.innerHTML="Pls Enter A Valid Password (Read the Note)!..";
+				p.style.display="block";
+                event.preventDefault();
+			}else{
+                if(newpass1.value != conpass.value)
+			    {
+                    conpass.style.border="1px solid red";
+                    p.innerHTML="Passwords not matched!..";
+                    p.style.display="block";
+                    event.preventDefault();
+			    }else{
+					newpass1.style.border="none";
+                    conpass.style.border="none";
+                    p.style.display="none";
+                    event.preventDefault();
+					const username=username1.value;
+                    const email=email1.value;
+					const phno=phoneno1.value;
+                    const password=newpass1.value;
+                    const response = await fetch('http://localhost:3000/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+							username,
+                            email,
+							phno,
+                            password
+                        })
+                    });
+                    if(response.ok)
+                    {
+                        window.location.href="/login";
+                    }
+                    else
+					{
+                        email1.style.border="1px solid red";
+                        p.innerHTML="User With This Email Already Exsists!.";
+                        p.style.display="block";
+                    }
+			    }
+            }
+
+		})
+	</script>
+</body>
+</html>
+			

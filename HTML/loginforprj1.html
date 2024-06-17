@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Login Form</title>
+		<link rel="stylesheet" type="text/css" href="/CSS/cssforlogin.css">
+		<script src="https://kit.fontawesome.com/8267c973ee.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="logo-details">
+			<img src="/ASSETS/Logo.jpg">
+			<p><b>Value Each And Every Customer.We Are looking Forward To Provide a Better User Interface"</b></p>
+		</div>
+		<div class="topnav">
+			<i class="fa-solid fa-house" style="color: #ffffff;"></i>
+			<a href="/">Home</a>
+			<a href="/issues">Any Issues</a>
+			<a href="/about">About</a>
+			<img src="/ASSETS/pickitup.jpg">
+			<a class="log2" href="/signup">Sign-up</a>
+		</div>
+		<div class="login-form">
+			<h2>Sign-in</h2>
+			<form action="http://localhost:3000/login" method="post">
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+				<button type="submit">Sign-in</button>
+			</form>
+					<br><b><a href="/forgotPassword">Forgot Passord</a></b><br>
+			<b>Don't have a account  <a href="/signup">Sign-up</a></b>
+		</div>
+	</body>
+</html>

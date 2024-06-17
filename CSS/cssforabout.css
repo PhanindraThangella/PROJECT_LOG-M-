@@ -1,0 +1,256 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f1f1f1;
+}
+.topnav {
+  	background-color: #000000;
+  	overflow: hidden;
+	width:100%;
+	height: 50px;
+}
+.topnav a {
+  	float: left;
+  	color: #f2f2f2;
+  	text-align: center;
+  	border-radius:90px;
+  	padding: 10px 16px;
+  	margin:5px;
+  	text-decoration: none;
+  	font-size: 17px;
+}
+.topnav a:hover {
+  	background-color:#F8F8FF;
+  	color: black;
+}
+.topnav i{
+ 	float:left;
+	text-align:center;
+ 	text-decoration:none;
+	padding: 14px 16px;
+ 	margin:5px;
+}	
+.topnav a.active{
+    	background-color:#F8F8FF;
+    	color:black;
+}
+.aboutscriptmain p{
+  	font-family: "Times New Roman", Times, serif;
+  	font-size:20px;
+  	padding-left:150px;
+}
+.aboutscriptmain{
+	width:800px;
+	height:120px;
+}
+.aboutscript{
+  	width:100%;
+  	height:320px;
+}
+.aboutscriptsub{
+	width:100%;
+	height:120px;
+	margin-bottom:40px;	
+}
+.aboutscriptsub ul{
+  	font-size:22px;
+  	padding-left:180px;
+}
+.privacypolicy{
+	width:100%;
+	height:600px;
+}
+.ppmain p{
+  	font-family: "Times New Roman", Times, serif;
+  	font-size:22px;
+  	padding-left:50px;
+}
+.tandc ul{
+  	font-size:22px;
+  	padding-left:150px;
+}
+.privacypolicy ul{
+  	font-size:22px;
+  	padding-left:150px;
+}
+.ppmain {
+	width:700px;
+	height:100px;
+	margin-left:100px;
+}
+h2{
+  	padding-left:50px;
+}
+.privacypolicy h3{
+    	color:black;
+    	padding-left:120px;
+}
+.declaration{
+	width:900px;
+	height:100px;
+	margin:30px 0px 70px 100px;
+}
+.declaration p{
+    	font-family: "Georgia", serif;
+    	font-size:22px;
+    	font-weight:Bold;
+		padding-left:50px;
+}
+.greetcontainer{
+    	width:1168px;
+    	height:250px;
+}
+.greet h3{
+    	color:white;
+    	padding:50px 80px 80px 100px;
+    	font-size:22px;
+}
+.greetcontainer .greet{
+    	border-radius:20px;
+    	width:1000px;
+    	height:200px;
+    	background-color:grey;
+   		margin-left:100px;
+}
+.greet a{
+    	text-decoration:none;
+    	color:white;
+}
+footer {
+	display:block;
+	margin:auto;
+	width:88%;
+	height:700px;
+    background-color:#000000;
+	border-radius:80px;
+}
+footer h4{
+	color:white;
+	padding-left:45px;
+	padding-top:70px;
+}
+.icon-bar a:hover{
+	color:#F3FF00;
+}
+.icon-bar a{
+    	color:white;
+    	text-decoration:none;
+}
+.icon-bar li{
+	padding-top:20px;
+	padding-left:30px;
+	padding-bottom:20px;
+}
+.icon-bar h4{
+	color:white;
+	padding-top:10px;
+	padding-left:45px;
+}
+footer b{
+    	color:white;
+    	padding-left:40px;
+    	padding-top:10px;
+}
+@media screen and (max-width:500px){
+	.topnav a{
+	padding: 10px 12px;
+  	font-size: 14px;
+	}
+	.topnav{
+		height:50px;
+	}
+	.topnav i{
+		padding:10px 12px;
+	}
+	.aboutscriptmain p{
+		font-family: "Times New Roman", Times, serif;
+		font-size:17px;
+		padding-left:20px;
+	}
+	.aboutscriptmain{
+		width:100%;
+		height:170px;
+	}
+	h2{
+		padding-left:10px;
+	}
+  	.aboutscript{
+		width:100%;
+		height:400px;
+  	}
+  	.aboutscriptsub ul{
+		font-size:17px;
+		padding-left:50px;
+  	}
+	.tandc ul{
+		font-size:17px;
+		padding-left:50px;
+  	}
+	.ppmain p{
+		font-size:17px;
+		padding-left:20px;
+  	}
+  	.privacypolicy ul{
+		font-size:17px;
+		padding-left:50px;
+  	}
+  	.ppmain {
+	  	width:97%;
+	  	margin-left:10px;
+  	}
+	.privacypolicy{
+		height:900px;
+	}
+	.ppsub h3{
+		padding-left:10px;
+	}
+	.declaration{
+		width:100%;
+		height:120px;
+		margin:0px;
+	}
+	.declaration p{
+    	font-size:15px;
+    	padding-left:10px;
+	}
+	.greetcontainer{
+    	width:100%;
+    	height:300px;
+		margin-top:20px;	
+	}
+	.greet h3{
+    	padding:50px 0px 80px 20px;
+		margin:0px;
+	}
+	.greet a{
+		display: none;;
+	}
+	.greetcontainer .greet{
+    	width:95%;
+    	height:280px;
+   		margin-left:10px;
+	}
+	footer {
+		display:block;
+		width:100%;
+		height:550px;
+		border-radius:0px;
+		margin:0px;
+	}
+	footer h4{
+		padding-top:40px;
+		padding-left:20px;
+	}
+	.icon-bar h4{
+		padding-left:20px;
+	}
+	.icon-bar b{
+		padding-left:20px;
+	}
+	.icon-bar .mail{
+		padding-left:40px;
+	}
+	.icon-bar li{
+		padding-left:10px;
+	}
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Driver Main</title>
+        <link rel="stylesheet" href="/CSS/cssfordrivermain.css">
+        <script src="https://kit.fontawesome.com/8267c973ee.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header class="header">
+                <h1>Pick It Up</h1>
+                <div class="headermenu">
+                    <ul>
+                        <li><a href="/">HOME</a></li>
+                        <li><a href="/issues">HELP</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                </div>
+            </header>
+            <div class="remaining">
+                <aside class="sidenav">
+                    <nav>
+                        <ul class="listitems">
+                            <li id="dashboard">Dashboard</li>
+                            <li id="liveorders">Live Orders</li>
+                            <li>Amount Withdraw</li>
+                            <li>Profile</li>
+                        </ul>
+                    </nav>
+                </aside>
+                <section class="maincontent">
+                    <div class="maincontentdiv">
+                    <div class="renderdiv" id="renderdiv"></div>
+                    <div class="NoOrders" id="NoOrders">
+                        <h1>Welcome!.U haven't Started yet.</h1>
+                        <h3>Make it a Start.Search For Live Orders Now.</h3>
+                    </div>
+                    </div>
+                </section>
+                <section class="earnings">
+                    <h1>Analytics</h1><br><hr>
+                    <h2>Total Orders Done</h2>
+                    <div class="earningsTod"><p class="EarningsTodDOM" id="EarningsTodDOM">0</p></div>
+                    <h2>Total Kms Travelled</h2>
+                    <div class="earningsTKT"><p class="EarningsTKTDOM" id="EarningsTKTDOM">10 Kms</p></div>
+                    <h2>Total Earnings</h2>
+                    <div class="earningsTE"><p class="EarningsTEDOM" id="EarningsTEDOM">₹0.00</p></div>
+                </section>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded',(event)=>{
+                fetchOrderDetails();
+                const loadOrdersButton=document.getElementById('dashboard');
+                loadOrdersButton.addEventListener('click',()=>{
+                    fetchOrderDetails();
+                })
+                const loadliveOrdersButton=document.getElementById('liveorders');
+                loadliveOrdersButton.addEventListener('click', () => {
+                    fetchLiveOrderDetails('pending');
+                });
+            })
+            async function fetchOrderDetails() {
+              try {
+                
+                const response = await fetch(`/customerOrderDetails`);
+                if (!response.ok) {
+                  throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const data = await response.json();
+                const container = document.getElementById('renderdiv');
+                container.innerHTML = ''; // Clear previous content
+                if (!data || (Array.isArray(data) && data.length === 0)) {
+                    document.getElementById('NoOrders').style.display="block";
+                } else{
+                    document.getElementById('NoOrders').style.display="none";
+                    data.forEach(order => {
+                    const dateObj = new Date(order.DateOfOrder);
+                    const formattedDate = dateObj.toLocaleDateString();
+                    const formattedTime = dateObj.toLocaleTimeString();
+                    const formattedDateTime = `${formattedDate} ${formattedTime}`;
+                    let txt=document.createElement('div');
+                    txt.className="addingdivs";
+                    let sub1=document.createElement('div');
+                    sub1.className="child";
+                    let sub2=document.createElement('div');
+                    sub2.className="imgchild";
+                    let imgele=document.createElement('img');
+                    imgele.classList.add("imgmain");
+                    imgele.src=`/UserImages/${order.ProductImage_Name}`;
+                    sub2.appendChild(imgele);
+                    let multipleLinesHTML=
+                    '<h2  class="h2stylemain"> Your Order</h2>'+
+                    `<span class="orderid" id="orderid" >Order ID:</span>`+
+                    `<span class="orderiddata">${order.OrderId}</span>`+`<br>`+    
+                    '<span class="delbymain">Order Deliver Location:</span>'+`<br>`+
+                    `<span class="orderdelloc">${order.ReceiverAddress}</span>`+'<br>'+
+                    '<span class="dofmain">DATE OF ORDER:</span>'+`<br>`+
+                    `<span class="dofdotmain">${formattedDateTime}</span>`+'<br>'+
+                    '<span class="amtmain">Amount Status:</span>'+
+                    `<span class="amtstatus">Paid</span>`+'<br>'+
+                    `<button class="updateStsButton">Update Status</button>`
+                    sub1.innerHTML=multipleLinesHTML;
+                    txt.appendChild(sub1);
+                    txt.appendChild(sub2);
+                    document.getElementById("renderdiv").appendChild(txt);
+                    });
+                }
+                
+              } catch (error) {
+                console.error('Fetch error: ', error);
+              }
+            }
+            //function for live orders 
+            async function fetchLiveOrderDetails(status) {
+              try {
+                const response = await fetch(`/customerOrderDetails/${status}`);
+                if (!response.ok) {
+                  throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const data = await response.json();
+                const container = document.getElementById('renderdiv');
+                container.innerHTML = ''; // Clear previous content
+                if (!data || (Array.isArray(data) && data.length === 0)) {
+                    document.getElementById('NoOrders').style.display="block";
+                } else{
+                    document.getElementById('NoOrders').style.display="none";
+                    data.forEach(order => {
+                    const dateObj = new Date(order.DateOfOrder);
+                    const formattedDate = dateObj.toLocaleDateString();
+                    const formattedTime = dateObj.toLocaleTimeString();
+                    const formattedDateTime = `${formattedDate} ${formattedTime}`;
+                    let txt=document.createElement('div');
+                    txt.className="addingdivs";
+                    let sub1=document.createElement('div');
+                    sub1.className="child";
+                    let sub2=document.createElement('div');
+                    sub2.className="imgchild";
+                    let imgele=document.createElement('img');
+                    imgele.classList.add("imgmain");
+                    imgele.src=`/UserImages/${order.ProductImage_Name}`;
+                    sub2.appendChild(imgele);
+                    let multipleLinesHTML=
+                    '<h2  class="h2stylemain">Available Order</h2>'+
+                    `<span class="orderid" id="orderid" >Order ID:</span>`+  
+                    `<span class="orderiddata">${order.OrderId}</span>`+`<br>`+    
+                    '<span class="stsmain">PickUp Location:</span>'+`<br>`+
+                    `<span class="stsdatamain">${order.SenderAddress}</span>`+'<br>'+
+                    '<span class="delbymain">Order Deliver Location:</span>'+`<br>`+
+                    `<span class="orderdelloc">${order.ReceiverAddress}</span>`+'<br>'+
+                    '<span class="dofmain">DATE OF ORDER:</span>'+`<br>`+
+                    `<span class="dofdotmain">${formattedDateTime}</span>`+'<br>'+  
+                    `<button class="acceptbutton">Accept</button>`+
+                    `<button class="rejectbutton">Reject</button>`;
+                    sub1.innerHTML=multipleLinesHTML;
+                    txt.appendChild(sub1);
+                    txt.appendChild(sub2);
+                    document.getElementById("renderdiv").appendChild(txt);
+                    });
+                } 
+              } catch (error) {
+                console.error('Fetch error: ', error);
+              }
+            }
+        </script>
+    </body>
+</html>
